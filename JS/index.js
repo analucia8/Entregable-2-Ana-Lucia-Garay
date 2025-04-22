@@ -1,7 +1,21 @@
 let historias = JSON.parse(localStorage.getItem("historias")) || [];
-let usuario = "";
+let usuario = localStorage.getItem("usuario") || "";
+let usuarioDatos = JSON.parse(localStorage.getItem("usuarioDatos")) || { edad: "", genero: "" };
 
 document.addEventListener("DOMContentLoaded", () => {
+  if (usuario) {
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("formularioHistoria").classList.remove("hidden");
+    document.getElementById("nombreMostrado").textContent = usuario;
+    document.getElementById("tituloPrincipal").textContent = `¡Bienvenida/o ${usuario} al Generador de Historias!`;
+    if (usuarioDatos.edad && usuarioDatos.genero) {
+      document.getElementById("edad").value = usuarioDatos.edad;
+      document.getElementById("genero").value = usuarioDatos.genero;
+      document.getElementById("edad").disabled = true;
+      document.getElementById("genero").disabled = true;
+    }
+  }
+
   document.getElementById("btnLogin").addEventListener("click", iniciarSesion);
   document.getElementById("formHistoria").addEventListener("submit", crearHistoria);
   document.getElementById("crearOtra").addEventListener("click", mostrarOpcionesOtraHistoria);
@@ -24,6 +38,8 @@ function iniciarSesion() {
     document.getElementById("formularioHistoria").classList.remove("hidden");
     document.getElementById("nombreMostrado").textContent = usuario;
     document.getElementById("tituloPrincipal").textContent = `¡Bienvenida/o ${usuario} al Generador de Historias!`;
+  } else {
+    alert("Por favor, ingresa un nombre válido.");
   }
 }
 
@@ -34,10 +50,36 @@ function crearHistoria(e) {
     nombre: document.getElementById("nombreMostrado").textContent,
     edad: document.getElementById("edad").value,
     genero: document.getElementById("genero").value.toLowerCase(),
-    lugar: document.getElementById("lugar").value,
-    objetoMagico: document.getElementById("objetoMagico").value,
+    lugar: document.getElementById("lugar").value.trim(),
+    objetoMagico: document.getElementById("objetoMagico").value.trim(),
     generoObjeto: document.getElementById("generoObjeto").value.toLowerCase()
   };
+
+  if (!datos.edad || datos.edad <= 0) {
+    alert("Por favor, ingresa una edad válida mayor a 0.");
+    return;
+  }
+  if (!datos.genero) {
+    alert("Por favor, selecciona un género.");
+    return;
+  }
+  if (!datos.lugar) {
+    alert("Por favor, ingresa un lugar válido.");
+    return;
+  }
+  if (!datos.objetoMagico) {
+    alert("Por favor, ingresa un objeto mágico válido.");
+    return;
+  }
+  if (!datos.generoObjeto) {
+    alert("Por favor, selecciona el género del objeto.");
+    return;
+  }
+
+  if (usuario === datos.nombre) {
+    usuarioDatos = { edad: datos.edad, genero: datos.genero };
+    localStorage.setItem("usuarioDatos", JSON.stringify(usuarioDatos));
+  }
 
   historias.push(datos);
   localStorage.setItem("historias", JSON.stringify(historias));
@@ -84,11 +126,28 @@ function resetFormulario(nombre) {
   document.getElementById("opcionesOtraHistoria").classList.add("hidden");
   document.getElementById("formularioHistoria").classList.remove("hidden");
 
+  const edadInput = document.getElementById("edad");
+  const generoSelect = document.getElementById("genero");
+
   if (nombre) {
     document.getElementById("nombreMostrado").textContent = nombre;
+    if (usuarioDatos.edad && usuarioDatos.genero) {
+      edadInput.value = usuarioDatos.edad;
+      generoSelect.value = usuarioDatos.genero;
+      edadInput.disabled = true;
+      generoSelect.disabled = true;
+    }
   } else {
     const nuevoNombre = prompt("¿Cuál es el nombre de la otra persona?");
-    document.getElementById("nombreMostrado").textContent = nuevoNombre || "Visitante";
+    const nombreFinal = nuevoNombre && nuevoNombre.trim() ? nuevoNombre.trim() : "Visitante";
+    usuario = nombreFinal;
+    localStorage.setItem("usuario", usuario);
+    usuarioDatos = { edad: "", genero: "" };
+    localStorage.setItem("usuarioDatos", JSON.stringify(usuarioDatos));
+    document.getElementById("nombreMostrado").textContent = nombreFinal;
+    document.getElementById("tituloPrincipal").textContent = `¡Bienvenida/o ${nombreFinal} al Generador de Historias!`;
+    edadInput.disabled = false;
+    generoSelect.disabled = false;
   }
 }
 
@@ -97,13 +156,18 @@ function mostrarHistoriasFiltradas(propias) {
   const lista = document.getElementById("listaHistorias");
   lista.innerHTML = "";
 
+  if (!nombreUsuario) {
+    lista.innerHTML = "<li>No hay usuario registrado. Por favor, inicia sesión.</li>";
+    return;
+  }
+
   const historiasFiltradas = historias.filter(hist => propias
     ? hist.nombre === nombreUsuario
     : hist.nombre !== nombreUsuario
   );
 
   if (historiasFiltradas.length === 0) {
-    lista.innerHTML = "<li>No hay historias para mostrar.</li>";
+    lista.innerHTML = `<li>No hay ${propias ? "historias propias" : "historias de otros usuarios"} para mostrar.</li>`;
     return;
   }
 
