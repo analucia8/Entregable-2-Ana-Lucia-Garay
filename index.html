@@ -2,57 +2,66 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Generador de Historias</title>
   <link rel="stylesheet" href="./CSS/style.css" />
 </head>
 <body>
-  <h1 id="tituloPrincipal">Bienvenido al Generador de Historias</h1>
+  <h1 id="tituloPrincipal">Generador de Historias</h1>
 
   <div id="login">
-    <label for="nombreUsuario">Ingresa tu nombre:</label>
-    <input type="text" id="nombreUsuario">
-    <button id="btnLogin">Iniciar Sesión</button>
+    <h2>Iniciar Sesión</h2>
+    <input type="text" id="nombreUsuario" placeholder="Ingresa tu nombre"/>
+    <button id="btnLogin">Entrar</button>
   </div>
 
   <div id="formularioHistoria" class="hidden">
-    <h2>¡Hola <span id="nombreMostrado"></span>! Completa los datos para tu historia:</h2>
+    <h2>Hola <span id="nombreMostrado"></span></h2>
+    <p id="mensajeUsuario"></p>
     <form id="formHistoria">
-      <label>Edad: <input type="number" id="edad" required></label><br>
+      <label for="edad">Edad:</label>
+      <input type="number" id="edad" required />
+
       <label for="genero">Género:</label>
       <select id="genero" required>
-        <option value="">--Selecciona--</option>
+        <option value="">Selecciona</option>
         <option value="niña">Niña</option>
         <option value="niño">Niño</option>
-      </select><br>
-      <label>Lugar de la historia: <input type="text" id="lugar" required></label><br>
-      <label>Objeto mágico: <input type="text" id="objetoMagico" required></label><br>
+      </select>
+
+      <label for="lugar">Lugar donde ocurre la historia:</label>
+      <input type="text" id="lugar" required />
+
+      <label for="objetoMagico">Objeto mágico encontrado:</label>
+      <input type="text" id="objetoMagico" required />
+
       <label for="generoObjeto">Género del objeto:</label>
       <select id="generoObjeto" required>
-        <option value="">--Selecciona--</option>
-        <option value="una">Una</option>
-        <option value="un">Un</option>
-      </select><br><br>
-      <button type="submit">Crear Historia</button>
+        <option value="">Selecciona</option>
+        <option value="una">Femenino (una varita, una piedra...)</option>
+        <option value="un">Masculino (un anillo, un libro...)</option>
+      </select>
+
+      <button type="submit">Crear historia</button>
     </form>
   </div>
 
   <div id="resultado" class="hidden">
-    <h2>Tu Historia</h2>
+    <h2>Tu historia generada:</h2>
     <p id="historiaFinal"></p>
-    <button id="crearOtra">¿Crear otra historia?</button>
+    <button id="crearOtra">Crear otra historia</button>
   </div>
 
   <div id="opcionesOtraHistoria" class="hidden">
-    <p>¿Para quién será?</p>
+    <h3>¿Para quién es la nueva historia?</h3>
     <button id="mismaPersona">Para mí</button>
-    <button id="otraPersona">Otra persona</button>
+    <button id="otraPersona">Para otra persona</button>
   </div>
 
   <div id="filtroHistorias" class="hidden">
-    <h3>Filtrar historias:</h3>
+    <h2>Mis Historias Guardadas</h2>
     <button id="verPropias">Ver mis historias</button>
-    <button id="verOtras">Ver otras historias</button>
+    <button id="verOtras">Ver historias de otras personas</button>
     <ul id="listaHistorias"></ul>
   </div>
 
