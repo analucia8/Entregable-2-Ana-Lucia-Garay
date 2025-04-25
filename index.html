@@ -7,63 +7,65 @@
   <link rel="stylesheet" href="./CSS/style.css" />
 </head>
 <body>
-  <h1 id="tituloPrincipal">Generador de Historias</h1>
 
-  <div id="login">
-    <h2>Iniciar Sesión</h2>
-    <input type="text" id="nombreUsuario" placeholder="Ingresa tu nombre"/>
-    <button id="btnLogin">Entrar</button>
-  </div>
+  <main>
+    <h1 id="tituloPrincipal">Generador de Historias</h1>
 
-  <div id="formularioHistoria" class="hidden">
-    <h2>Hola <span id="nombreMostrado"></span></h2>
-    <p id="mensajeUsuario"></p>
-    <form id="formHistoria">
-      <label for="edad">Edad:</label>
-      <input type="number" id="edad" required />
+    <section id="login">
+      <label for="nombreUsuario">Ingresa tu nombre:</label>
+      <input type="text" id="nombreUsuario" />
+      <button id="btnLogin">Iniciar sesión</button>
+    </section>
 
-      <label for="genero">Género:</label>
-      <select id="genero" required>
-        <option value="">Selecciona</option>
-        <option value="niña">Niña</option>
-        <option value="niño">Niño</option>
-      </select>
+    <section id="formularioHistoria" class="hidden">
+      <form id="formHistoria">
+        <p>Creando historia para <strong><span id="nombreMostrado"></span></strong></p>
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" required />
 
-      <label for="lugar">Lugar donde ocurre la historia (Ej: la ciudad, el bosque, un castillo...):</label>
-      <input type="text" id="lugar" required />
+        <label for="genero">Género:</label>
+        <select id="genero" required>
+          <option value="">Selecciona</option>
+          <option value="niña">Niña</option>
+          <option value="niño">Niño</option>
+        </select>
 
-      <label for="objetoMagico">Objeto mágico encontrado (Ej: varita, libro, anillo... ):</label>
-      <input type="text" id="objetoMagico" required />
+        <label for="lugar">Lugar:</label>
+        <input type="text" id="lugar" required />
 
-      <label for="generoObjeto">Género del objeto:</label>
-      <select id="generoObjeto" required>
-        <option value="">Selecciona</option>
-        <option value="una">una</option>
-        <option value="un">un</option>
-      </select>
+        <label for="objetoMagico">Objeto mágico:</label>
+        <input type="text" id="objetoMagico" required />
 
-      <button type="submit">Crear historia</button>
-    </form>
-  </div>
+        <label for="generoObjeto">Género del objeto:</label>
+        <select id="generoObjeto" required>
+          <option value="">Selecciona</option>
+          <option value="una">Femenino (una)</option>
+          <option value="un">Masculino (un)</option>
+        </select>
 
-  <div id="resultado" class="hidden">
-    <h2>Tu historia generada:</h2>
-    <p id="historiaFinal"></p>
-    <button id="crearOtra">Crear otra historia</button>
-  </div>
+        <button type="submit">Crear historia</button>
+      </form>
+    </section>
 
-  <div id="opcionesOtraHistoria" class="hidden">
-    <h3>¿Para quién es la nueva historia?</h3>
-    <button id="mismaPersona">Para mí</button>
-    <button id="otraPersona">Para otra persona</button>
-  </div>
+    <section id="resultado" class="hidden">
+      <h2>Tu historia:</h2>
+      <p id="historiaFinal"></p>
+      <button id="crearOtra">¿Crear otra historia?</button>
+    </section>
 
-  <div id="filtroHistorias" class="hidden">
-    <h2>Mis Historias Guardadas</h2>
-    <button id="verPropias">Ver mis historias</button>
-    <button id="verOtras">Ver historias de otras personas</button>
-    <ul id="listaHistorias"></ul>
-  </div>
+    <section id="opcionesOtraHistoria" class="hidden">
+      <p>¿Para quién será la próxima historia?</p>
+      <button id="mismaPersona">Para mí</button>
+      <button id="otraPersona">Para otra persona</button>
+    </section>
+
+    <section id="filtroHistorias" class="hidden">
+      <h2>Filtrar historias</h2>
+      <button id="verPropias">Ver mis historias</button>
+      <button id="verOtras">Ver otras historias</button>
+      <ul id="listaHistorias"></ul>
+    </section>
+  </main>
 
   <script src="./JS/index.js"></script>
 </body>
